@@ -55,4 +55,4 @@ gbp buildpackage --git-export-dir=/tmp/build/pardus-about -us -uc
 * Python codes must be compatible with pep8 rules. For this you can use pylint, pyflakes etc.
 * When you create variable it must use underscore style. For example "package_size = 30". Dont use short name in variables like "pkg_sz = 30".
 * GTK Widget IDs must be like this "ui_mybutton_togglebutton" on everywhere(Python, Glade).
-* If you really have no other choice, you should prefer standard libraries when writing code. For example don't write a config parser for yourself, because python already have a config parser library.
+* If you really have no other choice, you should prefer standard libraries when writing code. For example don't write a config parser for yourself, because python already have a config parser library.# pardus-about-
