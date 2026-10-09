@@ -117,7 +117,7 @@
     <property name="window-position">center</property>
     <property name="default-width">900</property>
     <property name="default-height">600</property>
-    <property name="icon-name">pardus-about</property>
+    <property name="icon-name">pars-about</property>
     <child>
       <object class="GtkStack" id="ui_main_stack">
         <property name="visible">True</property>
@@ -155,7 +155,7 @@
                             <property name="halign">center</property>
                             <property name="valign">center</property>
                             <property name="pixel-size">160</property>
-                            <property name="icon-name">pardus-about-main</property>
+                            <property name="icon-name">pars-about-main</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -681,14 +681,14 @@
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">About Pardus About Application</property>
     <property name="window-position">center-on-parent</property>
-    <property name="icon-name">pardus-about</property>
+    <property name="icon-name">pars-about</property>
     <property name="type-hint">dialog</property>
     <property name="transient-for">ui_main_window</property>
     <property name="program-name">Pardus About</property>
     <property name="version">1.0.0 beta1</property>
     <property name="copyright">© TÜBİTAK BİLGEM</property>
     <property name="comments" translatable="yes">Get info about your Pardus system.</property>
-    <property name="website">https://github.com/pardus/pardus-about</property>
+    <property name="website">https://github.com/pardus/pars-about</property>
     <property name="website-label" translatable="yes">Website</property>
     <property name="license" translatable="yes">This program comes with absolutely no warranty.
 See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License, version 3 or later&lt;/a&gt; for details.</property>
@@ -700,7 +700,7 @@ Mehmet Zahid Berktas &lt;mehmet.berktas@pardus.org.tr&gt;
 Yusuf Düzgün &lt;yusuf.duzgun@pardus.org.tr&gt;</property>
     <property name="translator-credits" translatable="yes" comments="Name Surname &lt;example@examplemail.com&gt;">translator-credits</property>
     <property name="artists">Mehmet Zahid Berktas &lt;mehmet.berktas@pardus.org.tr&gt;</property>
-    <property name="logo-icon-name">pardus-about</property>
+    <property name="logo-icon-name">pars-about</property>
     <property name="wrap-license">True</property>
     <property name="license-type">gpl-3-0</property>
     <child internal-child="vbox">
@@ -831,7 +831,7 @@ Yusuf Düzgün &lt;yusuf.duzgun@pardus.org.tr&gt;</property>
     <property name="window-position">center-on-parent</property>
     <property name="default-width">450</property>
     <property name="default-height">200</property>
-    <property name="icon-name">pardus-about</property>
+    <property name="icon-name">pars-about</property>
     <property name="transient-for">ui_main_window</property>
     <property name="attached-to">ui_main_window</property>
     <child>

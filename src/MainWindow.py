@@ -26,7 +26,7 @@ from widget.HardwareGridCell import HardwareGridCell
 import ActionsAsk
 
 # Translation Constants:
-APPNAME = "pardus-about"
+APPNAME = "pars-about"
 TRANSLATIONS_PATH = "/usr/share/locale"
 
 # Translation functions:
@@ -311,23 +311,23 @@ class MainWindow:
             ["tux", _("Kernel"), self.os_info["kernel"]],
             # Desktop
             [
-                "pardus-about-desktop",
+                "pars-about-desktop",
                 _("Desktop"),
                 f"{self.os_info['desktop']} {self.os_info['desktop_version']} ({self.os_info['display']})",
             ],
             # Processor
-            ["pardus-about-processor", _("Processor"), pc.get_processor_info()["name"]],
+            ["pars-about-processor", _("Processor"), pc.get_processor_info()["name"]],
             # Graphics
             [
-                "pardus-about-graphics",
+                "pars-about-graphics",
                 _("Graphics"),
                 label_from_fields(hw.get("graphics", []), ["vendor", "name"]),
             ],
             # Memory
-            ["pardus-about-memory", _("Memory"), pc.get_memory_summary()],
+            ["pars-about-memory", _("Memory"), pc.get_memory_summary()],
             # Storage
             [
-                "pardus-about-storage",
+                "pars-about-storage",
                 _("Storage"),
                 label_from_fields(
                     hw.get("storage", []), ["size", "model"], skip_if_type_none=True
@@ -335,25 +335,25 @@ class MainWindow:
             ],
             # Bluetooth
             [
-                "pardus-about-bluetooth",
+                "pars-about-bluetooth",
                 _("Bluetooth"),
                 label_from_fields(hw.get("bluetooth", []), ["vendor", "name"]),
             ],
             # Audio
             [
-                "pardus-about-audio",
+                "pars-about-audio",
                 _("Audio"),
                 label_from_fields(hw.get("audio", []), ["vendor", "name"]),
             ],
             # Wifi
             [
-                "pardus-about-wifi",
+                "pars-about-wifi",
                 _("Wifi"),
                 label_from_fields(hw.get("wifi", []), ["name"]),
             ],
             # Ethernet
             [
-                "pardus-about-ethernet",
+                "pars-about-ethernet",
                 _("Ethernet"),
                 label_from_fields(hw.get("ethernet", []), ["name"]),
             ],
@@ -365,7 +365,7 @@ class MainWindow:
         # Private IP
         add_to_grid(
             HardwareGridCell(
-                "pardus-about-ethernet",
+                "pars-about-ethernet",
                 _("Private IP"),
                 sanitize_local_ip(network.get_local_ip()),
                 can_hide=True,
@@ -375,7 +375,7 @@ class MainWindow:
         # Public IP
         # Fill IP address later with: fetch_public_ip
         self.public_ip_cell = HardwareGridCell(
-            "pardus-about-publicip",
+            "pars-about-publicip",
             _("Public IP"),
             "...",
             can_hide=True,
@@ -393,7 +393,7 @@ class MainWindow:
         # === Computer ===
         computer_info = self.computer_manager.get_computer_info()
         computer_info_row = HardwareDetailRow(
-            icon_name="pardus-about-computer",
+            icon_name="pars-about-computer",
             title=_("Computer Info"),
             headers=[_("Vendor"), _("Model"), _("Family")],
             table=[
@@ -408,7 +408,7 @@ class MainWindow:
 
         # === Operating System ===
         os_info_row = HardwareDetailRow(
-            icon_name="pardus-about-symbolic",
+            icon_name="pars-about-symbolic",
             title=_("Operating System"),
             headers=[_("Name"), _("Version"), _("Kernel"), _("Desktop"), _("Display")],
             table=[
@@ -426,7 +426,7 @@ class MainWindow:
         # === Processor ===
         processor_info = self.computer_manager.get_processor_info()
         processor_info_row = HardwareDetailRow(
-            icon_name="pardus-about-processor",
+            icon_name="pars-about-processor",
             title=_("Processor"),
             headers=[_("Vendor"), _("Model"), _("Cores / Threads")],
             table=[
@@ -459,7 +459,7 @@ class MainWindow:
                 memory_info_table.append([i, vendor, size_text, mem_type, speed])
 
         memory_info_row = HardwareDetailRow(
-            icon_name="pardus-about-memory",
+            icon_name="pars-about-memory",
             title=_("Memory"),
             headers=[_("Slot"), _("Vendor"), _("Size"), _("Type"), _("Speed")],
             table=memory_info_table,
@@ -479,7 +479,7 @@ class MainWindow:
             storage_info_table = [[_("Device not found"), "", ""]]
 
         storage_info_row = HardwareDetailRow(
-            icon_name="pardus-about-storage",
+            icon_name="pars-about-storage",
             title=_("Storage"),
             headers=[_("Size"), _("Type"), _("Model")],
             table=storage_info_table,
@@ -500,7 +500,7 @@ class MainWindow:
             graphics_info_table = [[_("Device not found"), "", ""]]
 
         graphics_info_row = HardwareDetailRow(
-            icon_name="pardus-about-graphics",
+            icon_name="pars-about-graphics",
             title=_("Graphics"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=graphics_info_table,
@@ -521,7 +521,7 @@ class MainWindow:
             display_info_table = [[_("Device not found"), "", ""]]
 
         display_info_row = HardwareDetailRow(
-            icon_name="pardus-about-monitor",
+            icon_name="pars-about-monitor",
             title=_("Display"),
             headers=[_("Vendor"), _("Resolution"), _("Model")],
             table=display_info_table,
@@ -541,7 +541,7 @@ class MainWindow:
             ethernet_info_table = [[_("Device not found"), "", ""]]
 
         ethernet_info_row = HardwareDetailRow(
-            icon_name="pardus-about-ethernet",
+            icon_name="pars-about-ethernet",
             title=_("Ethernet"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=ethernet_info_table,
@@ -561,7 +561,7 @@ class MainWindow:
             wifi_info_table = [[_("Device not found"), "", ""]]
 
         wifi_info_row = HardwareDetailRow(
-            icon_name="pardus-about-wifi",
+            icon_name="pars-about-wifi",
             title=_("Wifi"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=wifi_info_table,
@@ -580,7 +580,7 @@ class MainWindow:
         if bluetooth_info_table == []:
             bluetooth_info_table = [[_("Device not found"), "", ""]]
         bluetooth_info_row = HardwareDetailRow(
-            icon_name="pardus-about-bluetooth",
+            icon_name="pars-about-bluetooth",
             title=_("Bluetooth"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=bluetooth_info_table,
@@ -599,7 +599,7 @@ class MainWindow:
         if audio_info_table == []:
             audio_info_table = [[_("Device not found"), "", ""]]
         audio_info_row = HardwareDetailRow(
-            icon_name="pardus-about-audio",
+            icon_name="pars-about-audio",
             title=_("Audio"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=audio_info_table,
@@ -618,7 +618,7 @@ class MainWindow:
         if camera_info_table == []:
             camera_info_table = [[_("Device not found"), "", ""]]
         camera_info_row = HardwareDetailRow(
-            icon_name="pardus-about-camera",
+            icon_name="pars-about-camera",
             title=_("Camera"),
             headers=[_("Vendor"), _("Driver"), _("Model")],
             table=camera_info_table,
@@ -638,7 +638,7 @@ class MainWindow:
             keyboard_info_table = [[_("Device not found"), "", ""]]
 
         keyboard_info_row = HardwareDetailRow(
-            icon_name="pardus-about-keyboard",
+            icon_name="pars-about-keyboard",
             title=_("Keyboard"),
             headers=[_("Name"), _("Driver"), _("Connection")],
             table=keyboard_info_table,
@@ -658,7 +658,7 @@ class MainWindow:
             mouse_info_table = [[_("Device not found"), "", ""]]
 
         mouse_info_row = HardwareDetailRow(
-            icon_name="pardus-about-mouse",
+            icon_name="pars-about-mouse",
             title=_("Mouse"),
             headers=[_("Name"), _("Driver"), _("Connection")],
             table=mouse_info_table,
@@ -677,7 +677,7 @@ class MainWindow:
             fingerprint_info_table = [[_("Device not found"), "", ""]]
 
         fingerprint_info_row = HardwareDetailRow(
-            icon_name="pardus-about-fingerprint",
+            icon_name="pars-about-fingerprint",
             title=_("Fingerprint"),
             headers=[_("Vendor"), _("Model")],
             table=fingerprint_info_table,
@@ -696,7 +696,7 @@ class MainWindow:
             printer_info_table = [[_("Device not found"), "", ""]]
 
         printer_info_row = HardwareDetailRow(
-            icon_name="pardus-about-printer",
+            icon_name="pars-about-printer",
             title=_("Printer"),
             headers=[_("Vendor"), _("Connection")],
             table=printer_info_table,

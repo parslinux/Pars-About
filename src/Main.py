@@ -20,13 +20,13 @@ class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
         super().__init__(
             *args,
-            application_id="tr.org.pardus.about",
+            application_id="org.parslinux.about",
             flags=Gio.ApplicationFlags(8),
             **kwargs,
         )
 
         self.window = None
-        GLib.set_prgname("tr.org.pardus.about")
+        GLib.set_prgname("org.parslinux.about")
 
         self.setup_options()
 

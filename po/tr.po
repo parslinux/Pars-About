@@ -1,6 +1,6 @@
-# Turkish transhlation of pardus-about
-# Copyright (C) 2020-2023 pardus-about'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the pardus-about package.
+# Turkish transhlation of pars-about
+# Copyright (C) 2020-2023 pars-about'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pars-about package.
 #
 # Emin fedar <emin.fedar@pardus.org.tr>, 2020.
 # Ercan Ersoy <ercanersoy@ercanersoy.net>, 2023.

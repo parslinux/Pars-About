@@ -1,5 +1,5 @@
 #!/usr/bin/python3
 
 import sys
-sys.path.insert(0, "/usr/share/pardus/pardus-about/src")
+sys.path.insert(0, "/usr/share/pars/pars-about/src")
 import Main

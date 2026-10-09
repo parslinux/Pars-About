@@ -1,12 +1,12 @@
-Source: pardus-about
+Source: pars-about
 Section: utils
 Priority: optional
 Maintainer: Fatih Altun <fatih.altun@pardus.org.tr>
 Build-Depends: debhelper (>= 10), meson
 Standards-Version: 4.3.0
-Homepage: https://github.com/pardus/pardus-about
+Homepage: https://github.com/parslinux/Pars-About
 
-Package: pardus-about
+Package: pars-about
 Architecture: all
 Depends: ${misc:Depends},
          ${python3:Depends},

@@ -11,14 +11,14 @@ fi
 
 
 echo "updating pot file"
-xgettext -o po/pardus-about.pot --files-from=po/files
+xgettext -o po/pars-about.pot --files-from=po/files
 
 for lang in ${langs[@]}; do
 	if [[ -f po/$lang.po ]]; then
 		echo "updating $lang.po"
-		msgmerge -o po/$lang.po po/$lang.po po/pardus-about.pot
+		msgmerge -o po/$lang.po po/$lang.po po/pars-about.pot
 	else
 		echo "creating $lang.po"
-		cp po/pardus-about.pot po/$lang.po
+		cp po/pars-about.pot po/$lang.po
 	fi
 done
