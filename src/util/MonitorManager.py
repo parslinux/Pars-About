@@ -3,10 +3,13 @@ from . import edid
 
 
 def read_edid(path) -> edid.Edid:
-    with open(path, "rb") as f:
-        content = f.read()
-        monitor_info = edid.Edid(content)
-        return monitor_info
+    try:
+        with open(path, "rb") as f:
+            content = f.read()
+            monitor_info = edid.Edid(content)
+            return monitor_info
+    except Exception:
+        pass
 
     return None
 
@@ -19,8 +22,10 @@ def scan_monitors():
     if monitors:
         return monitors
 
-    # DRM altındaki tüm edid dosyalarını ara
     drm_paths = "/sys/class/drm"
+    if not os.path.exists(drm_paths):
+        return monitors
+
     for drm_path in os.listdir(drm_paths):
         try:
             edid_path = os.path.join(drm_paths, drm_path, "edid")

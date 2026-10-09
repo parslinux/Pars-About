@@ -3,12 +3,14 @@ from . import HardwareDetector
 
 
 def parse_uevent_file(uevent_path):
-    data = {"driver": None, "class_id": None, "pci_id": None, "modalias_id": None}
+    data = {"driver": "", "class_id": "", "pci_id": "", "modalias_id": "", "pci_slot_name": ""}
 
     try:
         with open(uevent_path) as uevent_file:
             for line in uevent_file:
-                key, value = line.strip().split("=")
+                if "=" not in line:
+                    continue
+                key, value = line.strip().split("=", 1)
                 if key == "DRIVER":
                     data["driver"] = value
                 elif key == "PCI_CLASS":
@@ -19,8 +21,8 @@ def parse_uevent_file(uevent_path):
                     data["modalias_id"] = value
                 elif key == "PCI_SLOT_NAME":
                     data["pci_slot_name"] = value
-    except FileNotFoundError:
-        print("file not found")
+    except Exception as e:
+        print(f"Error reading uevent file {uevent_path}: {e}")
     return data
 
 
@@ -41,10 +43,17 @@ def get_sys_bus_uevent():
 
 
 def match_class_with_category(class_id):
+    if not class_id:
+        return None
+    normalized = str(class_id).lower()
+    if normalized.startswith("0x"):
+        normalized = normalized[2:]
+    normalized = normalized.lstrip("0")
+
     device_classes = {"28": "wifi", "3": "graphics", "4": "audio", "20": "ethernet"}
 
     for key, value in device_classes.items():
-        if class_id.startswith(key):
+        if normalized.startswith(key):
             return value
 
     return None
@@ -70,24 +79,34 @@ def get_pci_devices():
         if category not in data:
             data[category] = []
 
-        available_drivers = HardwareDetector.find_drivers(pci["modalias_id"])
-        vendor_id, product_id = pci["pci_id"].lower().split(":")
-        vendor, name = HardwareDetector.get_vendor_product_name(
-            "pci", vendor_id, product_id
-        )
-        if pci["modalias_id"] is not None and (name is None or vendor is None):
-            vendor_text = (
-                pci["modalias_id"].split("d")[0] + "*" + "\n ID_VENDOR_FROM_DATABASE="
-            )
-            product_text = (
-                pci["modalias_id"].split("s")[0] + "*" + "\n ID_MODEL_FROM_DATABASE="
-            )
+        modalias = pci.get("modalias_id") or ""
+        available_drivers = HardwareDetector.find_drivers(modalias) if modalias else []
+        pci_id = pci.get("pci_id") or ""
 
-            vendor, name = HardwareDetector.get_vendor_product_name_from_udev(
-                "pci", vendor_text, product_text
-            )
+        vendor_id, product_id = "", ""
+        if ":" in pci_id:
+            parts = pci_id.lower().split(":", 1)
+            vendor_id, product_id = parts[0], parts[1]
 
-        bus_address = pci["pci_slot_name"]
+        vendor, name = None, None
+        if vendor_id and product_id:
+            vendor, name = HardwareDetector.get_vendor_product_name(
+                "pci", vendor_id, product_id
+            )
+        if modalias and (name is None or vendor is None):
+            if "d" in modalias and "s" in modalias:
+                vendor_text = (
+                    modalias.split("d")[0] + "*" + "\n ID_VENDOR_FROM_DATABASE="
+                )
+                product_text = (
+                    modalias.split("s")[0] + "*" + "\n ID_MODEL_FROM_DATABASE="
+                )
+
+                vendor, name = HardwareDetector.get_vendor_product_name_from_udev(
+                    "pci", vendor_text, product_text
+                )
+
+        bus_address = pci.get("pci_slot_name", "")
 
         # Vendor renaming:
         if vendor is None:
@@ -96,10 +115,10 @@ def get_pci_devices():
             vendor = "Intel"
 
         device = {
-            "device_id": pci["pci_id"],
-            "name": name,
+            "device_id": pci_id,
+            "name": name or "",
             "vendor": vendor,
-            "driver": pci["driver"],
+            "driver": pci.get("driver") or "",
             "available_drivers": available_drivers,
             "bus": "pci",
             "bus_address": bus_address,

@@ -174,7 +174,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label">Pardus</property>
+                                <property name="label">Pars</property>
                                 <property name="selectable">True</property>
                                 <attributes>
                                   <attribute name="weight" value="bold"/>
@@ -494,53 +494,67 @@
                       </packing>
                     </child>
                     <child>
-                      <!-- n-columns=2 n-rows=6 -->
-                      <object class="GtkGrid" id="ui_hardware_grid">
+                      <object class="GtkScrolledWindow">
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-start">15</property>
-                        <property name="margin-end">7</property>
-                        <property name="margin-top">7</property>
-                        <property name="margin-bottom">7</property>
-                        <property name="row-spacing">7</property>
-                        <property name="column-spacing">7</property>
-                        <property name="row-homogeneous">True</property>
-                        <property name="column-homogeneous">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="vscrollbar-policy">automatic</property>
                         <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
+                          <object class="GtkViewport">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <!-- n-columns=2 n-rows=6 -->
+                              <object class="GtkGrid" id="ui_hardware_grid">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="margin-start">15</property>
+                                <property name="margin-end">7</property>
+                                <property name="margin-top">7</property>
+                                <property name="margin-bottom">7</property>
+                                <property name="row-spacing">7</property>
+                                <property name="column-spacing">7</property>
+                                <property name="row-homogeneous">True</property>
+                                <property name="column-homogeneous">True</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -623,7 +637,7 @@
                     <property name="can-focus">False</property>
                     <property name="margin-top">5</property>
                     <property name="margin-bottom">5</property>
-                    <property name="label">© TÜBİTAK BİLGEM</property>
+                    <property name="label">© Pars Linux</property>
                     <attributes>
                       <attribute name="weight" value="light"/>
                     </attributes>
@@ -646,7 +660,7 @@
           </object>
           <packing>
             <property name="name">page_info_box</property>
-            <property name="title" translatable="yes">Pardus Info</property>
+            <property name="title" translatable="yes">Pars Info</property>
           </packing>
         </child>
       </object>
@@ -655,7 +669,7 @@
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="title" translatable="yes">About Pardus</property>
+        <property name="title" translatable="yes">About Pars</property>
         <property name="has-subtitle">False</property>
         <property name="show-close-button">True</property>
         <child>
@@ -679,16 +693,16 @@
   </object>
   <object class="GtkAboutDialog" id="ui_about_dialog">
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">About Pardus About Application</property>
+    <property name="title" translatable="yes">About Pars About Application</property>
     <property name="window-position">center-on-parent</property>
     <property name="icon-name">pars-about</property>
     <property name="type-hint">dialog</property>
     <property name="transient-for">ui_main_window</property>
-    <property name="program-name">Pardus About</property>
+    <property name="program-name">Pars About</property>
     <property name="version">1.0.0 beta1</property>
-    <property name="copyright">© TÜBİTAK BİLGEM</property>
-    <property name="comments" translatable="yes">Get info about your Pardus system.</property>
-    <property name="website">https://github.com/pardus/pars-about</property>
+    <property name="copyright">© Pars Linux</property>
+    <property name="comments" translatable="yes">Get info about your Pars system.</property>
+    <property name="website">https://github.com/parslinux/Pars-About</property>
     <property name="website-label" translatable="yes">Website</property>
     <property name="license" translatable="yes">This program comes with absolutely no warranty.
 See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU General Public License, version 3 or later&lt;/a&gt; for details.</property>
@@ -827,7 +841,7 @@ Yusuf Düzgün &lt;yusuf.duzgun@pardus.org.tr&gt;</property>
   </object>
   <object class="GtkWindow" id="ui_gathering_logs_popup">
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">About Pardus</property>
+    <property name="title" translatable="yes">About Pars</property>
     <property name="window-position">center-on-parent</property>
     <property name="default-width">450</property>
     <property name="default-height">200</property>
@@ -926,7 +940,7 @@ Yusuf Düzgün &lt;yusuf.duzgun@pardus.org.tr&gt;</property>
               <object class="GtkLabel" id="ui_gathering_logs_filename">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label">pardus_system_report.tar.gz</property>
+                <property name="label">pars_system_report.tar.gz</property>
               </object>
               <packing>
                 <property name="expand">False</property>

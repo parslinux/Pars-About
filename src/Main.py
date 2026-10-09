@@ -11,6 +11,22 @@ from MainWindow import MainWindow
 from util import ComputerManager
 
 
+def setup_gdk_log_handler():
+    def log_handler(domain, level, message, user_data):
+        if message and "gdk_x11_window_get_xid" in message:
+            return
+        GLib.log_default_handler(domain, level, message, user_data)
+
+    GLib.log_set_handler(
+        "Gdk",
+        GLib.LogLevelFlags.LEVEL_CRITICAL | GLib.LogLevelFlags.LEVEL_WARNING,
+        log_handler,
+        None,
+    )
+
+
+setup_gdk_log_handler()
+
 if "--json" in sys.argv or "-j" in sys.argv:
     manager = ComputerManager.ComputerManager()
     print(json.dumps(manager.get_all_device_info(), indent=2))

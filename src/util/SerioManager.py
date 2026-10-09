@@ -3,38 +3,59 @@ import os
 
 def get_serio_devices():
     def _read_file(path):
-        # print(path)
         if os.path.isfile(path):
-            with open(path, "r") as f:
-                return f.read().strip()
+            try:
+                with open(path, "r") as f:
+                    return f.read().strip()
+            except Exception:
+                pass
         return ""
 
     data = {"mouse": [], "keyboard": []}
-    for dev in os.listdir("/sys/bus/serio/devices"):
+    serio_path = "/sys/bus/serio/devices"
+    if not os.path.exists(serio_path):
+        return data
+
+    for dev in os.listdir(serio_path):
         dev_name = dev
-        dev = f"/sys/bus/serio/devices/{dev}"
-        if not "input" in os.listdir(dev):
+        dev_dir = f"{serio_path}/{dev}"
+        if not os.path.isdir(dev_dir):
             continue
 
-        driver = os.readlink(f"{dev}/driver").split("/")[-1]
-        for finput in os.listdir(f"{dev}/input"):
-            if not finput.startswith("input"):
-                continue
+        input_dir = f"{dev_dir}/input"
+        if not os.path.exists(input_dir):
+            continue
 
-            info = {
-                "name": _read_file(f"{dev}/input/{finput}/name"),
-                "vendor_id": _read_file(f"{dev}/input/{finput}/id/vendor"),
-                "product_id": _read_file(f"{dev}/input/{finput}/id/product"),
-                "driver": driver,
-                "bus": "serio",
-                "bus_adress": dev_name,
-                "input_device": finput,
-            }
+        driver = ""
+        driver_symlink = f"{dev_dir}/driver"
+        if os.path.exists(driver_symlink):
+            try:
+                driver = os.readlink(driver_symlink).split("/")[-1]
+            except OSError:
+                driver = ""
 
-            if driver == "psmouse":
-                data["mouse"].append(info)
-            else:
-                data["keyboard"].append(info)
+        try:
+            for finput in os.listdir(input_dir):
+                if not finput.startswith("input"):
+                    continue
+
+                info = {
+                    "name": _read_file(f"{input_dir}/{finput}/name"),
+                    "vendor_id": _read_file(f"{input_dir}/{finput}/id/vendor"),
+                    "product_id": _read_file(f"{input_dir}/{finput}/id/product"),
+                    "driver": driver,
+                    "bus": "serio",
+                    "bus_address": dev_name,
+                    "input_device": finput,
+                }
+
+                if driver == "psmouse":
+                    data["mouse"].append(info)
+                else:
+                    data["keyboard"].append(info)
+        except Exception as e:
+            print("Error scanning serio inputs:", e)
+
     return data
 
 

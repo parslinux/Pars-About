@@ -70,6 +70,14 @@ class TableContent(Gtk.Box):
 
             # Data Column
             for row in table:
-                col_box.add(Gtk.Label(label=row[i], halign="start"))
+                lbl = Gtk.Label(
+                    label=str(row[i]),
+                    halign="start",
+                    hexpand=True,
+                    wrap=True,
+                    selectable=True,
+                )
+                col_box.add(lbl)
 
             self.add(col_box)
+

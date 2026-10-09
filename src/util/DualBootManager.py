@@ -5,8 +5,13 @@ import json
 
 def list_parts():
     ret = []
+    if not os.path.exists("/sys/block"):
+        return ret
     for disk in os.listdir("/sys/block"):
-        for part in os.listdir(f"/sys/block/{disk}"):
+        disk_path = f"/sys/block/{disk}"
+        if not os.path.isdir(disk_path):
+            continue
+        for part in os.listdir(disk_path):
             if not part.startswith(disk):
                 continue
             ret.append(part)
@@ -14,10 +19,16 @@ def list_parts():
 
 
 def get_root_part():
-    with open("/proc/mounts", "r") as f:
-        for line in f.read().split("\n"):
-            if "/" == line.split(" ")[1]:
-                return line.split(" ")[0]
+    if not os.path.isfile("/proc/mounts"):
+        return None
+    try:
+        with open("/proc/mounts", "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) >= 2 and parts[1] == "/":
+                    return parts[0]
+    except Exception:
+        pass
     return None
 
 
@@ -51,9 +62,14 @@ def get_windows_version():
 
 def get_dualboot_oses():
     dualboot = {}
-    os.makedirs("/run/winroot", exist_ok=True)
-    os.chown("/run/winroot", 0, 0)
-    os.chmod("/run/winroot", 0o700)
+    try:
+        os.makedirs("/run/winroot", exist_ok=True)
+        os.chown("/run/winroot", 0, 0)
+        os.chmod("/run/winroot", 0o700)
+    except Exception as e:
+        print("Failed to prepare /run/winroot:", e)
+        return json.dumps(dualboot)
+
     root_part = get_root_part()
     for part in list_parts():
         if f"/dev/{part}" == root_part:
@@ -73,13 +89,21 @@ def get_dualboot_oses():
                 dualboot[part] = "Mac OS X"
             # Linux
             if os.path.exists("/run/winroot/etc/os-release"):
-                with open("/run/winroot/etc/os-release", "r") as f:
-                    for line in f.read().split("\n"):
-                        if line.startswith("NAME="):
-                            dualboot[part] = line[6:-1]
+                try:
+                    with open("/run/winroot/etc/os-release", "r") as f:
+                        for line in f.read().splitlines():
+                            if line.startswith("NAME="):
+                                name_val = line.split("=", 1)[1].strip('"\'')
+                                dualboot[part] = name_val
+                                break
+                except Exception:
+                    pass
             os.system("umount -lf /run/winroot")
 
-    os.rmdir("/run/winroot")
+    try:
+        os.rmdir("/run/winroot")
+    except Exception:
+        pass
     return json.dumps(dualboot)
 
 

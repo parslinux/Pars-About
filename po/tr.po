@@ -23,8 +23,8 @@ msgstr ""
 "X-Generator: Gtranslator 42.0\n"
 
 #: ui/MainWindow.glade:7 ui/MainWindow.glade:830
-msgid "About Pardus"
-msgstr "Pardus Hakkında"
+msgid "About Pars Linux"
+msgstr "Pars Linux Hakkında"
 
 #: ui/MainWindow.glade:39 ui/MainWindow.glade:639
 msgid "Gathering system logs..."
@@ -71,16 +71,16 @@ msgid "Details"
 msgstr "Detaylar"
 
 #: ui/MainWindow.glade:821
-msgid "Pardus Info"
-msgstr "Pardus Hakkında"
+msgid "Pars Linux Info"
+msgstr "Pars Linux Hakkında"
 
 #: ui/MainWindow.glade:854
-msgid "About Pardus About Application"
-msgstr "Pardus Hakkında Uygulaması Hakkında"
+msgid "About Pars About Application"
+msgstr "Pars Linux Hakkında Uygulaması Hakkında"
 
 #: ui/MainWindow.glade:862
-msgid "Get info about your Pardus system."
-msgstr "Pardus sisteminiz hakkında bilgi alın."
+msgid "Get info about your Pars Linux system."
+msgstr "Pars Linux sisteminiz hakkında bilgi alın."
 
 #: ui/MainWindow.glade:864
 msgid "Website"

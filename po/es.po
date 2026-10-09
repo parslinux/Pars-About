@@ -19,8 +19,8 @@ msgstr ""
 
 #: ui/MainWindow.glade:7 ui/MainWindow.glade:830
 #, fuzzy
-msgid "About Pardus"
-msgstr "Acerca de Pardus"
+msgid "About Pars Linux"
+msgstr "Acerca de Pars Linux"
 
 #: ui/MainWindow.glade:39 ui/MainWindow.glade:639
 msgid "Gathering system logs..."
@@ -71,16 +71,16 @@ msgstr ""
 
 #: ui/MainWindow.glade:821
 #, fuzzy
-msgid "Pardus Info"
-msgstr "Acerca de Pardus"
+msgid "Pars Linux Info"
+msgstr "Acerca de Pars Linux"
 
 #: ui/MainWindow.glade:854
-msgid "About Pardus About Application"
-msgstr "Acerca de la Aplicación Sobre Pardus"
+msgid "About Pars About Application"
+msgstr "Acerca de la Aplicación Sobre Pars Linux"
 
 #: ui/MainWindow.glade:862
-msgid "Get info about your Pardus system."
-msgstr "Obtén información sobre tu sistema Pardus."
+msgid "Get info about your Pars Linux system."
+msgstr "Obtén información sobre tu sistema Pars Linux."
 
 #: ui/MainWindow.glade:864
 msgid "Website"
@@ -340,8 +340,8 @@ msgid "Hostname change failed! Please check the terminal output."
 msgstr ""
 
 #, fuzzy
-#~ msgid "Pardus About"
-#~ msgstr "Acerca de Pardus"
+#~ msgid "Pars About"
+#~ msgstr "Acerca de Pars Linux"
 
 #~ msgid "About This Computer"
 #~ msgstr "Acerca de este ordenador"

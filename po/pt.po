@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 
 #: ui/MainWindow.glade:7 ui/MainWindow.glade:830
-msgid "About Pardus"
-msgstr "Acerca do Pardus"
+msgid "About Pars Linux"
+msgstr "Acerca do Pars Linux"
 
 #: ui/MainWindow.glade:39 ui/MainWindow.glade:639
 msgid "Gathering system logs..."
@@ -68,16 +68,16 @@ msgid "Details"
 msgstr "Detalhes"
 
 #: ui/MainWindow.glade:821
-msgid "Pardus Info"
-msgstr "Informações do Pardus"
+msgid "Pars Linux Info"
+msgstr "Informações do Pars Linux"
 
 #: ui/MainWindow.glade:854
-msgid "About Pardus About Application"
-msgstr "Sobre a aplicação Acerca do Pardus"
+msgid "About Pars About Application"
+msgstr "Sobre a aplicação Acerca do Pars Linux"
 
 #: ui/MainWindow.glade:862
-msgid "Get info about your Pardus system."
-msgstr "Obtenha informação sobre o seu sistema Pardus."
+msgid "Get info about your Pars Linux system."
+msgstr "Obtenha informação sobre o seu sistema Pars Linux."
 
 #: ui/MainWindow.glade:864
 msgid "Website"
@@ -350,8 +350,8 @@ msgstr "Falha ao alterar o nome da máquina! Verifique o resultado do terminal."
 #~ msgstr "Informações do computador"
 
 #, fuzzy
-#~ msgid "Pardus About"
-#~ msgstr "Informações do Pardus"
+#~ msgid "Pars About"
+#~ msgstr "Informações do Pars Linux"
 
 #~ msgid "<span size=\"small\">Computer</span>"
 #~ msgstr "<span size=\"small\">Computador</span>"

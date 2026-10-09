@@ -124,8 +124,13 @@ class ComputerManager:
         self.computer_info["oem"] = os.path.isfile("/sys/firmware/acpi/tables/MSDM")
 
         # Deep sleep mode support
-        with open("/sys/power/mem_sleep", "r") as f:
-            self.computer_info["mem_sleep_support"] = "deep" in f.read()
+        self.computer_info["mem_sleep_support"] = False
+        if os.path.isfile("/sys/power/mem_sleep"):
+            try:
+                with open("/sys/power/mem_sleep", "r") as f:
+                    self.computer_info["mem_sleep_support"] = "deep" in f.read()
+            except Exception:
+                pass
 
         # ACPI:
         p = Actions.run("acpi")
@@ -145,56 +150,71 @@ class ComputerManager:
         self.computer_info["boot"] = "legacy"
         if os.path.isdir("/sys/firmware/efi/"):
             self.computer_info["boot"] = "UEFI"
-            with open("/sys/firmware/efi/fw_platform_size", "r") as f:
-                if "32" == f.readline().strip():
-                    self.computer_info["boot"] = "UEFI32"
+            fw_size_path = "/sys/firmware/efi/fw_platform_size"
+            if os.path.isfile(fw_size_path):
+                try:
+                    with open(fw_size_path, "r") as f:
+                        if "32" == f.readline().strip():
+                            self.computer_info["boot"] = "UEFI32"
+                except Exception:
+                    pass
 
     def prepare_cpu_info(self):
-        with open("/proc/cpuinfo", "r") as f:
-            core_count = 0
-            model_name = ""
-            model_id = ""
-            vendor = ""
-            family = ""
-            for line in f.readlines():
-                splitted = line.split(":")
-                if len(splitted) < 2:
-                    continue
+        detected_cpus = os.cpu_count() or 1
+        core_count = detected_cpus
+        thread_count = detected_cpus
+        model_name = ""
+        model_id = ""
+        vendor = ""
+        family = ""
+        if os.path.isfile("/proc/cpuinfo"):
+            try:
+                with open("/proc/cpuinfo", "r") as f:
+                    for line in f.readlines():
+                        splitted = line.split(":", 1)
+                        if len(splitted) < 2:
+                            continue
 
-                key = splitted[0].strip()
-                value = splitted[1].strip()
+                        key = splitted[0].strip()
+                        value = splitted[1].strip()
 
-                if key == "siblings":
-                    thread_count = int(value)
-                elif key == "cpu cores":
-                    core_count = int(value)
-                elif key == "model name":
-                    model_name = value
-                elif key == "model":
-                    model_id = value
-                elif key == "cpu family":
-                    family = value
-                elif key == "vendor_id":
-                    if "NTEL" in value.upper():
-                        vendor = "Intel"
-                    elif "AMD" in value.upper():
-                        vendor = "AMD"
-                    else:
-                        vendor = "Unknown"
+                        if key == "siblings":
+                            try:
+                                thread_count = int(value)
+                            except ValueError:
+                                pass
+                        elif key == "cpu cores":
+                            try:
+                                core_count = int(value)
+                            except ValueError:
+                                pass
+                        elif key in ("model name", "Processor", "Hardware"):
+                            if not model_name:
+                                model_name = value
+                        elif key == "model":
+                            model_id = value
+                        elif key in ("cpu family", "CPU architecture"):
+                            family = value
+                        elif key in ("vendor_id", "CPU implementer"):
+                            if "NTEL" in value.upper():
+                                vendor = "Intel"
+                            elif "AMD" in value.upper():
+                                vendor = "AMD"
+                            else:
+                                vendor = value
+            except Exception as e:
+                print("Error reading /proc/cpuinfo:", e)
 
-                if core_count and model_name and family and vendor and model_id:
-                    break
+        self.processor_info = {
+            "name": model_name or "Unknown Processor",
+            "model_id": model_id,
+            "vendor": vendor or "Unknown",
+            "family_id": family,
+            "core_count": core_count,
+            "thread_count": thread_count,
+        }
 
-            self.processor_info = {
-                "name": model_name,
-                "model_id": model_id,
-                "vendor": vendor,
-                "family_id": family,
-                "core_count": core_count,
-                "thread_count": thread_count,
-            }
-
-            return self.processor_info
+        return self.processor_info
 
     def prepare_memory_info(self):
         client = GUdev.Client.new(["dmi"])

@@ -1,5 +1,13 @@
+import os
+
+
 def is_acpi_supported():
     """Requires root permission. Use only in Actions.py with pkexec."""
-
-    with open("/sys/firmware/acpi/tables/DSDT", "rb") as f:
-        return "linux" in str(f.read()).lower()
+    path = "/sys/firmware/acpi/tables/DSDT"
+    if not os.path.isfile(path):
+        return False
+    try:
+        with open(path, "rb") as f:
+            return "linux" in str(f.read()).lower()
+    except Exception:
+        return False

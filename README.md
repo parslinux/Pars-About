@@ -1,19 +1,19 @@
-# Pardus About
+# Pars About
 
-Pardus About is an application that show summary information about the PC.
+Pars About is an application that show summary information about the PC.
 
-It is currently a work in progress. Maintenance is done by <a href="https://www.pardus.org.tr/">Pardus</a> team.
+It is currently a work in progress. Maintenance is done by Pars team.
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/pardus-about.svg)](https://repology.org/project/pardus-about/versions)
+[![Packaging status](https://repology.org/badge/vertical-allrepos/pars-about.svg)](https://repology.org/project/pars-about/versions)
 
 
 ### **Screenshots**
 
-![Pardus About 1](screenshots/pardus-about-1.png)
+![Pars About 1](screenshots/pars-about-1.png)
 
-![Pardus About 2](screenshots/pardus-about-2.png)
+![Pars About 2](screenshots/pars-about-2.png)
 
-![Pardus About 2](screenshots/pardus-about-3.png)
+![Pars About 3](screenshots/pars-about-3.png)
 
 ### **Dependencies**
 
@@ -30,11 +30,11 @@ sudo apt install gir1.2-glib-2.0 gir1.2-gtk-3.0 python3-requests python3-gi lsb-
 ```
 Clone the repository
 ```bash
-git clone https://github.com/pardus/pardus-about.git ~/pardus-about
+git clone https://github.com/parslinux/Pars-About.git ~/pars-about
 ```
 Run application
 ```bash
-python3 ~/pardus-about/src/Main.py
+python3 ~/pars-about/src/Main.py
 ```
 
 ### **Build deb package**
@@ -42,17 +42,17 @@ python3 ~/pardus-about/src/Main.py
 ```bash
 sudo apt install devscripts git-buildpackage
 sudo mk-build-deps -ir
-gbp buildpackage --git-export-dir=/tmp/build/pardus-about -us -uc
+gbp buildpackage --git-export-dir=/tmp/build/pars-about -us -uc
 ```
 
 
 --------------------------------------
 <br>
 
-## **Pardus Python GTK Coding Rules**
+## **Pars Python GTK Coding Rules**
 
 * Project structures must be this project
 * Python codes must be compatible with pep8 rules. For this you can use pylint, pyflakes etc.
 * When you create variable it must use underscore style. For example "package_size = 30". Dont use short name in variables like "pkg_sz = 30".
 * GTK Widget IDs must be like this "ui_mybutton_togglebutton" on everywhere(Python, Glade).
-* If you really have no other choice, you should prefer standard libraries when writing code. For example don't write a config parser for yourself, because python already have a config parser library.# pardus-about-
+* If you really have no other choice, you should prefer standard libraries when writing code. For example don't write a config parser for yourself, because python already have a config parser library.# pars-about-

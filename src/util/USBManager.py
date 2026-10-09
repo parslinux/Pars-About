@@ -14,23 +14,29 @@ def read_file(filepath):
 
 def get_interface_info(device_path):
     info = {"driver_link": "", "interface_id": "", "modalias_id": ""}
+    if not os.path.isdir(device_path):
+        return info
+
     # Scan interfaces
     for device_file in os.listdir(device_path):
         if ":" in device_file:
             iface_dir = os.path.join(device_path, device_file)
+            if not os.path.isdir(iface_dir):
+                continue
 
-            driver_link_path = os.path.join(device_path, iface_dir, "driver")
+            driver_link_path = os.path.join(iface_dir, "driver")
             # MODALIAS=usb:v048Dp600Bd0003dc00dsc00dp00ic03isc00ip00in01
-            modalias_id = read_file(os.path.join(device_path, iface_dir, "modalias"))
-            # Read interface class subclass protocol f exist
+            modalias_id = read_file(os.path.join(iface_dir, "modalias"))
+            # Read interface class subclass protocol if exist
             i_class = ""
             i_subclass = ""
             i_protocol = ""
-            if modalias_id:
+            if modalias_id and "ic" in modalias_id:
                 ic_index = modalias_id.index("ic")
-                if ic_index:
-                    i_class = modalias_id[ic_index + 2 :][0:2]
+                i_class = modalias_id[ic_index + 2 :][0:2]
+                if len(modalias_id) >= ic_index + 9:
                     i_subclass = modalias_id[ic_index + 7 :][0:2]
+                if len(modalias_id) >= ic_index + 13:
                     i_protocol = modalias_id[ic_index + 11 :][0:2]
 
             if i_class and i_class != "FF" and i_class != "FE":
@@ -38,7 +44,7 @@ def get_interface_info(device_path):
                 info["interface_id"] = (
                     i_class + " " + i_subclass + " " + i_protocol
                 ).strip()
-                info["modalias_id"] = modalias_id
+                info["modalias_id"] = modalias_id or ""
 
                 return info
 
@@ -47,7 +53,7 @@ def get_interface_info(device_path):
 
 def get_sys_bus_uevent():
     """
-    Reads USB device information such as driver, vendor, product, and class ID
+    Reads USB device information such as driver, vendor, product, and class_id
     from /sys/bus/usb/devices
 
     Returns:
@@ -91,13 +97,15 @@ def get_sys_bus_uevent():
             except OSError as e:
                 print(f"Failed to read symlink: {driver_link_path} → {e}")
 
+        class_id_str = " ".join([c for c in [dev_class, dev_protocol, dev_subclass] if c])
+
         # Create a fresh dictionary per device
         info = {
             "driver": driver,
             "vendor_id": vendor_id,
             "product_id": product_id,
             "modalias_id": interface_info["modalias_id"],
-            "class_id": " ".join([dev_class, dev_protocol, dev_subclass]),
+            "class_id": class_id_str,
             "interface_id": interface_info["interface_id"],
             "product": product,
             "busnum": busnum,
@@ -105,7 +113,6 @@ def get_sys_bus_uevent():
         }
 
         infos.append(info)
-        # print(info)  # Debug output
 
     return infos
 
@@ -115,10 +122,11 @@ def get_hid_input_name(input_path):
     if not os.path.exists(name_path):
         return ""
 
-    with open(name_path, "r") as f:
-        return f.read()
-
-    return ""
+    try:
+        with open(name_path, "r") as f:
+            return f.read()
+    except Exception:
+        return ""
 
 
 def get_hid_input_type(input_path):
@@ -126,8 +134,11 @@ def get_hid_input_type(input_path):
     if not os.path.exists(modalias_path):
         return ""
 
-    with open(modalias_path, "r") as f:
-        data = f.read()
+    data = read_file(modalias_path)
+    if not data or "-" not in data:
+        return ""
+
+    try:
         capabilities = data.split("-")[1]
         events = []
         keys = []
@@ -150,16 +161,12 @@ def get_hid_input_type(input_path):
                     current_arr = others
             else:
                 current_value += c
-
-        # print("---hid---")
-        # print("modalias:", modalias_path)
-        # print("events:", events)
-        # print("keys:", keys)
+        if current_value:
+            current_arr.append(current_value)
 
         BTN_TOUCH = "14A" in keys  # touch support
         BTN_RIGHT = "111" in keys  # mouse right click
         EV_REL = "2" in events  # mouse, relative movement
-        # EV_ABS = "3" in events # touch, absolute position
         EV_REP = (
             "14" in events
         )  # keyboard detection, repeat key strokes on pressed down
@@ -173,6 +180,8 @@ def get_hid_input_type(input_path):
             return "mouse"
         elif EV_REP:
             return "keyboard"
+    except Exception:
+        pass
 
     return ""
 
@@ -185,13 +194,6 @@ def get_hid_devices():
     if hid_devices:
         return hid_devices
 
-    """
-    Reads HID device information from keyboards, mouses etc.
-    from /sys/bus/hid/devices
-
-    Returns:
-        list: A list of dictionaries containing name, address etc. of device
-    """
     dev_path = "/sys/bus/hid/devices"
 
     if not os.path.exists(dev_path):
@@ -213,29 +215,38 @@ def get_hid_devices():
         }
 
         # Base HID device informations
-        with open(os.path.join(device_path, "uevent"), "r") as f:
-            data = f.read()
-            for line in data.splitlines():
-                key, value = line.split("=")
-                if key == "DRIVER":
-                    info["driver"] = value
-                elif key == "HID_NAME":
-                    info["name"] = value
-                elif key == "HID_ID":
-                    bus, vendor, product = value.split(":")
-                    info["bus_address"] = f"0x{int(bus, base=16):01X}"
-                    info["vendor_id"] = f"0x{int(vendor, base=16):01X}"
-                    info["product_id"] = f"0x{int(product, base=16):01X}"
-                elif key == "HID_PHYS":
-                    if "usb-" in value:
-                        # example data: usb-0000:00:14.0-6.2.5/input0
-                        info["bus"] = "usb"
-                    elif "i2c-" in value:
-                        # example data: i2c-UNIW0001:00
-                        info["bus"] = "i2c"
-                    elif len(value.split(":")) == 6 and len(value) == 17:
-                        # example bluetooth address: 64:6c:80:3f:d6:ae
-                        info["bus"] = "bluetooth"
+        uevent_file = os.path.join(device_path, "uevent")
+        if os.path.isfile(uevent_file):
+            try:
+                with open(uevent_file, "r") as f:
+                    data = f.read()
+                    for line in data.splitlines():
+                        if "=" not in line:
+                            continue
+                        key, value = line.split("=", 1)
+                        if key == "DRIVER":
+                            info["driver"] = value
+                        elif key == "HID_NAME":
+                            info["name"] = value
+                        elif key == "HID_ID":
+                            parts = value.split(":")
+                            if len(parts) == 3:
+                                bus, vendor, product = parts
+                                try:
+                                    info["bus_address"] = f"0x{int(bus, base=16):01X}"
+                                    info["vendor_id"] = f"0x{int(vendor, base=16):01X}"
+                                    info["product_id"] = f"0x{int(product, base=16):01X}"
+                                except ValueError:
+                                    pass
+                        elif key == "HID_PHYS":
+                            if "usb-" in value:
+                                info["bus"] = "usb"
+                            elif "i2c-" in value:
+                                info["bus"] = "i2c"
+                            elif len(value.split(":")) == 6 and len(value) == 17:
+                                info["bus"] = "bluetooth"
+            except Exception:
+                pass
 
         # is input device? (mouse, keyboard, touch)
         input_dir = os.path.join(device_path, "input")
@@ -251,11 +262,9 @@ def get_hid_devices():
                 if input_name:
                     info_input["name"] = input_name
 
-                # print("type", info_input["type"])
                 if input_type != "":
                     info_input["type"] = input_type
                     info_input["input_device"] = input_device
-                    # print(info_input["name"], input_device)
 
                     hid_devices.append(info_input)
 
@@ -263,6 +272,8 @@ def get_hid_devices():
 
 
 def match_class_with_category(class_id):
+    if not class_id:
+        return None
     device_classes = {
         "02": "ethernet",
         "01": "audio",
@@ -282,6 +293,8 @@ def match_class_with_category(class_id):
 
 
 def match_driver_with_category(driver):
+    if not driver:
+        return None
     device_classes = {
         "btusb": "bluetooth",
         "uvcvideo": "camera",
@@ -299,10 +312,20 @@ usb_devices = None
 
 def is_hid_device(usb):
     def match(var1, var2):
-        return var1.lower() == "0x"+var2.lower()
+        if not var1 or not var2:
+            return False
+        v1 = str(var1).lower()
+        v2 = str(var2).lower()
+        if not v1.startswith("0x"):
+            v1 = "0x" + v1
+        if not v2.startswith("0x"):
+            v2 = "0x" + v2
+        return v1 == v2
+
+    usb_vendor = usb.get("vendor_id")
+    usb_product = usb.get("product_id")
     for hid in get_hid_devices():
-        if match(hid["vendor_id"] ,usb["vendor_id"]) and \
-            match(hid["product_id"], usb["product_id"]):
+        if match(hid.get("vendor_id"), usb_vendor) and match(hid.get("product_id"), usb_product):
             return True
     return False
 
@@ -324,11 +347,6 @@ def get_usb_devices():
         driver_category = match_driver_with_category(usb.get("driver", ""))
         interface_category = match_class_with_category(usb.get("interface_id", ""))
 
-        # print("---------")
-        # print("product:", usb.get("product", ""))
-        # print("class_id:", usb.get("class_id", ""))
-        # print("interface_id:", usb.get("interface_id", ""))
-
         if driver_category:
             category = driver_category
         elif class_category:
@@ -343,13 +361,14 @@ def get_usb_devices():
         if category not in data:
             data[category] = []
 
-        available_drivers = HardwareDetector.find_drivers(usb["modalias_id"])
-        vendor, name = HardwareDetector.get_vendor_product_name(
-            "usb", usb["vendor_id"], usb["product_id"]
-        )
+        modalias = usb.get("modalias_id", "")
+        available_drivers = HardwareDetector.find_drivers(modalias) if modalias else []
+        vendor_id = usb.get("vendor_id") or ""
+        product_id = usb.get("product_id") or ""
+        vendor, name = HardwareDetector.get_vendor_product_name("usb", vendor_id, product_id)
 
-        vendor_upper = usb["vendor_id"].upper()
-        product_upper = usb["product_id"].upper()
+        vendor_upper = vendor_id.upper()
+        product_upper = product_id.upper()
 
         if name is None or vendor is None:
             vendor_text = f"usb:v{vendor_upper}*\n ID_VENDOR_FROM_DATABASE="
@@ -362,12 +381,20 @@ def get_usb_devices():
             )
 
         if name is None:
-            name = usb["product"]
+            name = usb.get("product") or ""
 
         device_id = f"{vendor_upper}:{product_upper}"
 
-        busnum = f"{int(usb['busnum']):04}"
-        devnum = f"{int(usb['devnum']):04}"
+        try:
+            busnum = f"{int(usb.get('busnum', 0)):04}"
+        except (TypeError, ValueError):
+            busnum = "0000"
+
+        try:
+            devnum = f"{int(usb.get('devnum', 0)):04}"
+        except (TypeError, ValueError):
+            devnum = "0000"
+
         bus_address = f"{busnum}:{devnum}"
 
         if not vendor:
@@ -381,7 +408,7 @@ def get_usb_devices():
             "device_id": device_id,
             "name": name,
             "vendor": vendor,
-            "driver": usb["driver"],
+            "driver": usb.get("driver") or "",
             "available_drivers": available_drivers,
             "bus": "usb",
             "bus_address": bus_address,

@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ui/MainWindow.glade:7 ui/MainWindow.glade:830
-msgid "About Pardus"
+msgid "About Pars Linux"
 msgstr ""
 
 #: ui/MainWindow.glade:39 ui/MainWindow.glade:639
@@ -66,15 +66,15 @@ msgid "Details"
 msgstr ""
 
 #: ui/MainWindow.glade:821
-msgid "Pardus Info"
+msgid "Pars Linux Info"
 msgstr ""
 
 #: ui/MainWindow.glade:854
-msgid "About Pardus About Application"
+msgid "About Pars About Application"
 msgstr ""
 
 #: ui/MainWindow.glade:862
-msgid "Get info about your Pardus system."
+msgid "Get info about your Pars Linux system."
 msgstr ""
 
 #: ui/MainWindow.glade:864

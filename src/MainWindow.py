@@ -46,6 +46,14 @@ class MainWindow:
         # Gtk Builder
         self.builder = Gtk.Builder()
 
+        # Add icon search paths
+        local_icons = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/icons"))
+        if os.path.isdir(local_icons):
+            Gtk.IconTheme.get_default().append_search_path(local_icons)
+        usr_icons = "/usr/share/pars/pars-about/data/icons"
+        if os.path.isdir(usr_icons):
+            Gtk.IconTheme.get_default().append_search_path(usr_icons)
+
         self.load_css(os.path.dirname(os.path.abspath(__file__)) + "/../css/about.css")
 
         # Translate things on glade:
@@ -183,9 +191,12 @@ class MainWindow:
             return []
 
     def is_user_in_sudo_group(self):
-        username = os.getlogin()
+        try:
+            username = os.getlogin()
+        except Exception:
+            username = os.environ.get("USER") or GLib.get_user_name()
         groups = self.get_user_groups(username)
-        return "sudo" in groups
+        return "sudo" in groups or "wheel" in groups
 
     def read_pardus_info(self):
         self.os_info = OSManager.get_os_info()

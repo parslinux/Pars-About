@@ -26,5 +26,5 @@ Depends: ${misc:Depends},
          hwdata,
          dconf-cli
 Recommends: libnss-myhostname
-Description: About Pardus
- Get detailed system information about your Pardus system.
+Description: About Pars
+ Get detailed system information about your Pars system.

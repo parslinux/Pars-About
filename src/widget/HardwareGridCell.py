@@ -14,7 +14,7 @@ class HardwareGridCell(Gtk.Box):
         self.get_style_context().add_class("p-15-lr")
 
         # Icon
-        main_box = Gtk.Box(spacing=7, halign=Gtk.Align.START, valign=Gtk.Align.CENTER)
+        main_box = Gtk.Box(spacing=7, halign=Gtk.Align.FILL, hexpand=True, valign=Gtk.Align.CENTER)
         icon_img = Gtk.Image(icon_name=icon_name, pixel_size=42)
 
         # Title
@@ -22,17 +22,19 @@ class HardwareGridCell(Gtk.Box):
             orientation="vertical",
             spacing=3,
             valign=Gtk.Align.CENTER,
-            halign=Gtk.Align.START,
+            halign=Gtk.Align.FILL,
+            hexpand=True,
         )
-        title_lbl = Gtk.Label(label=f"{title}", halign=Gtk.Align.START)
+        title_lbl = Gtk.Label(label=f"{title}", halign=Gtk.Align.START, hexpand=True)
         box.add(title_lbl)
 
         # Name + (Optional Hide Button)
         self.value = value  # store value
-        value_box = Gtk.Box(spacing=7)
+        value_box = Gtk.Box(spacing=7, hexpand=True)
         self.value_lbl = Gtk.Label(
             label=f"<b>{value}</b>",
             halign=Gtk.Align.START,
+            hexpand=True,
             use_markup=True,
             ellipsize="end",
             selectable=True,
@@ -51,7 +53,6 @@ class HardwareGridCell(Gtk.Box):
             )
             self.hide_btn.set_valign(Gtk.Align.START)
             self.hide_btn.revealed = True
-            # self.hide_btn.get_style_context().add_class("flat")
 
             # Hide button if loading
             if value_loading:

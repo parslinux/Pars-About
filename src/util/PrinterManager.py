@@ -19,8 +19,7 @@ def get_printers():
             }
 
             printers_list.append(printer_obj)
-    except Exception as e:
-        print("Exception on get_printers():", e)
+    except Exception:
         return []
 
     return printers_list
