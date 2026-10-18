@@ -156,3 +156,18 @@ cython_debug/
 
 # Vim .swp files
 *.swp
+
+# Meson / Ninja build directories
+builddir/
+test_builddir/
+.ninja_log
+.ninja_deps
+
+# Packaging artifacts
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.pkg.tar.gz
+*.deb
+*.buildinfo
+*.changes
+pkg/

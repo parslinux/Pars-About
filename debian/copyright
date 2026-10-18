@@ -1,15 +1,11 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: pardus-about
+Upstream-Name: pars-about
 Source: https://github.com/parslinux/Pars-About
 
-
-
 Files: *
-Copyright: 2020 Emin Fedar <emin.fedar@pardus.org.tr>
-License: GPL-3.0+
-
-Files: *
-Copyright: 2022 Fatih Altun <fatih.altun@pardus.org.tr>
+Copyright: 2026 Pars Linux Developers <dev@parslinux.org>
+           2022 Fatih Altun <fatih.altun@pardus.org.tr>
+           2020 Emin Fedar <emin.fedar@pardus.org.tr>
 License: GPL-3.0+
 
 License: GPL-3.0+

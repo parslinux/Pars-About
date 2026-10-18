@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.parslinux.about</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Pars About</name>
+  <name xml:lang="tr">Pars Linux Hakkında</name>
+  <name xml:lang="pt">Sobre o Pars Linux</name>
+
+  <summary>System summary and comprehensive hardware information viewer</summary>
+  <summary xml:lang="tr">Sistem özeti ve ayrıntılı donanım bilgisi görüntüleyici</summary>
+  <summary xml:lang="pt">Resumo do sistema e visualizador abrangente de informações de hardware</summary>
+
+  <description>
+    <p>
+      Pars About is a modern system inspection and hardware diagnosis utility for Pars Linux and GNU/Linux distributions.
+      It presents essential system specifications and detailed hardware information in a clean, intuitive GTK+ interface,
+      while providing headless CLI JSON inspection for enterprise inventory automation.
+    </p>
+    <p xml:lang="tr">
+      Pars About, Pars Linux ve GNU/Linux sistemler için geliştirilmiş modern bir sistem ve donanım inceleme aracıdır.
+      İşlemci, bellek, grafik kartı, depolama, ekranlar ve bağlı aygıtlar gibi tüm donanım ayrıntılarını sade bir GTK+
+      arayüzünde sunarken, uçbirim üzerinden JSON dökümü alma yeteneğiyle kurumsal otomasyonları da destekler.
+    </p>
+    <ul>
+      <li>High-level overview of operating system, desktop environment, kernel, CPU, GPU, memory, and disks</li>
+      <li>In-depth hardware inspector for PCI, USB, EDID display timings, audio cards, and network controllers</li>
+      <li>Custom scalable SVG icons tailored for all device categories</li>
+      <li>Headless CLI mode (--json) for server diagnostics and automation scripts</li>
+      <li>System diagnostic archive generator for technical troubleshooting</li>
+      <li>Secure least-privilege architecture using PolicyKit</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">org.parslinux.about.desktop</launchable>
+  <url type="homepage">https://parslinux.org</url>
+  <url type="bugtracker">https://github.com/parslinux/Pars-About/issues</url>
+
+  <provides>
+    <binary>pars-about</binary>
+  </provides>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>System summary and OS details</caption>
+      <caption xml:lang="tr">Sistem özeti ve işletim sistemi ayrıntıları</caption>
+      <image>https://raw.githubusercontent.com/parslinux/Pars-About/master/screenshots/pars-about-1.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Comprehensive hardware details view</caption>
+      <caption xml:lang="tr">Ayrıntılı donanım bilgisi görünümü</caption>
+      <image>https://raw.githubusercontent.com/parslinux/Pars-About/master/screenshots/pars-about-2.png</image>
+    </screenshot>
+  </screenshots>
+
+  <releases>
+    <release version="0.1.0-alpha" date="2026-10-09">
+      <description>
+        <p>First release under Pars Linux branding featuring custom SVG device icons, UI scaling enhancements, and headless JSON CLI mode.</p>
+        <p xml:lang="tr">Pars Linux markalaması, özgün vektörel SVG cihaz simgeleri, arayüz ölçekleme düzeltmeleri ve headless JSON CLI modu içeren ilk sürüm.</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1" />
+</component>

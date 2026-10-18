@@ -6,7 +6,7 @@ from pathlib import Path
 
 from util import ComputerManager
 
-ARCHIVE_DIR = "/tmp/pardus_system_report"
+ARCHIVE_DIR = "/tmp/pars_system_report"
 
 
 def detect_pkexec_user():

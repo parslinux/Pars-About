@@ -1,18 +1,18 @@
 [Desktop Entry]
-Name=About Pardus
-Name[pt]=Sobre o Pardus
-Name[tr]=Pardus Hakkında
+Name=About Pars
+Name[pt]=Sobre o Pars
+Name[tr]=Pars Linux Hakkında
 GenericName=About
 GenericName[pt]=Sobre
 GenericName[tr]=Hakkında
-Comment=Get info about your Pardus system.
-Comment[pt]=Saiba mais sobre o seu sistema Pardus.
-Comment[tr]=Pardus sisteminiz hakkında bilgi edinin.
+Comment=Get info about your Pars system.
+Comment[pt]=Saiba mais sobre o seu sistema Pars.
+Comment[tr]=Pars Linux sisteminiz hakkında bilgi edinin.
 Exec=pars-about
 Icon=pars-about
 Terminal=false
 Type=Application
-Categories=Settings;X-XFCE-SettingsDialog;X-Pardus-Apps;
+Categories=Settings;X-XFCE-SettingsDialog;X-Pars-Apps;
 StartupNotify=true
 Keywords=about;info;system;
 Keywords[pt]=sobre;informação;sistema;

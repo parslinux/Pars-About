@@ -1,7 +1,7 @@
 Source: pars-about
 Section: utils
 Priority: optional
-Maintainer: Fatih Altun <fatih.altun@pardus.org.tr>
+Maintainer: Pars Linux Developers <dev@parslinux.org>
 Build-Depends: debhelper (>= 10), meson
 Standards-Version: 4.3.0
 Homepage: https://github.com/parslinux/Pars-About

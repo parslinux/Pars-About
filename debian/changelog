@@ -1,3 +1,14 @@
+pars-about (0.1.0-alpha) unstable; urgency=medium
+
+  * Rebrand application to Pars About (org.parslinux.about)
+  * Add custom SVG vector icons for all hardware categories
+  * Fix window resizing, scaling and responsive layouts
+  * Enable headless CLI (--json / -j) execution without X11
+  * Add AppStream metainfo XML and PolicyKit rules
+  * Update documentation stack
+
+ -- Pars Linux Developers <dev@parslinux.org>  Wed, 14 Oct 2026 03:00:00 +0300
+
 pardus-about (1.2.6) yirmibes; urgency=medium
 
   [ Özcan ]

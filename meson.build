@@ -22,6 +22,9 @@ subdir('polkit')
 install_data('org.parslinux.about.desktop', install_dir : '/usr/share/applications/')
 install_data('org.parslinux.about-hardware.desktop', install_dir : '/usr/share/applications/')
 
+# metainfo
+install_data('data/org.parslinux.about.metainfo.xml', install_dir : '/usr/share/metainfo/')
+
 # command
 install_data('pars-about.py', install_dir : '/usr/bin', rename: 'pars-about')
 

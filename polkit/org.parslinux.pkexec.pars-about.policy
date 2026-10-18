@@ -5,8 +5,8 @@
 
 <policyconfig>
 
-  <vendor>Pardus Developers</vendor>
-  <vendor_url>http://www.pardus.org.tr/</vendor_url>
+  <vendor>Pars Linux Developers</vendor>
+  <vendor_url>https://parslinux.org/</vendor_url>
 
   <action id="org.parslinux.pkexec.pars-about.export_report">
     <description>Run system report creator.</description>

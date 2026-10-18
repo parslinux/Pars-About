@@ -1,0 +1,40 @@
+# Claude & AI Assistant Ignore List for Pars Linux About (pars-about)
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build and Packaging Output
+builddir/
+_build/
+dist/
+*.egg-info/
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.substvars
+debian/pars-about/
+debian/pardus-about/
+*.deb
+*.build
+*.buildinfo
+*.changes
+
+# Local User Caches, Configs & Logs
+.cache/
+*.log
+/tmp/pars_system_report/
+/tmp/pardus_system_report/
+
+# Git & VCS
+.git/
+
+# Internal Tooling & Agent Artifacts
+.system_generated/
+scratch/
+.gemini/

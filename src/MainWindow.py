@@ -783,7 +783,7 @@ class MainWindow:
             SystemReportManager.generate_user_report()
 
             archive_name = (
-                f"pardus_system_report_{SystemReportManager.pkexec_user}.tar.gz"
+                f"pars_system_report_{SystemReportManager.pkexec_user}.tar.gz"
             )
             p2 = SystemReportManager.archive_and_copy_to_desktop(
                 desktop_path, archive_name
