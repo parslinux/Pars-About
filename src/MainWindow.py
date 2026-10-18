@@ -33,7 +33,7 @@ TRANSLATIONS_PATH = "/usr/share/locale"
 locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
 locale.textdomain(APPNAME)
 
-HARDWARE_API_DOMAIN = "https://donanim.pardus.org.tr"
+HARDWARE_API_DOMAIN = "https://donanim.parslinux.org"
 HARDWARE_API = f"{HARDWARE_API_DOMAIN}/api/v1"
 
 
@@ -75,7 +75,7 @@ class MainWindow:
         # Global Definitions:
         self.define_components()
 
-        self.read_pardus_info()
+        self.read_os_info()
 
         task = Gio.Task.new(callback=self.on_read_hardware_info_finish)
         task.run_in_thread(self.read_hardware_info)
@@ -198,7 +198,7 @@ class MainWindow:
         groups = self.get_user_groups(username)
         return "sudo" in groups or "wheel" in groups
 
-    def read_pardus_info(self):
+    def read_os_info(self):
         self.os_info = OSManager.get_os_info()
         self.ui_distro_id_label.set_text(self.os_info["os_id"].title())
         self.ui_distro_version_label.set_text(self.os_info["os_version_id"])

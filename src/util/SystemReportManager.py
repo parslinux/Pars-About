@@ -24,7 +24,7 @@ pkexec_user = detect_pkexec_user()
 
 
 def run_and_save(command, command_name=None):
-    """Usage: run_and_save(["journalctl", "-q", "-n", 1000]), it will be saved in /tmp/pardus_system_report/journalctl"""
+    """Usage: run_and_save(["journalctl", "-q", "-n", 1000]), it will be saved in /tmp/pars_system_report/journalctl"""
 
     if not command:
         return

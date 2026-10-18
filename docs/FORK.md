@@ -1,62 +1,58 @@
-# Pars About — Fork ve Geliştirme Notları (FORK.md)
+# Pars About — Çatallanma (Fork) ve Bağımsızlık Bildirisi
 
-Bu belge, **Pars About** projesinin kökenini, Pardus ekosisteminden çatallanma (fork) sürecini, gerçekleştirilen mimari ve görsel iyileştirmeleri açıklar.
-
----
-
-## 1. Projenin Kökeni ve Çatallanma Amacı
-
-Pars About, TÜBİTAK ULAKBİM tarafından Pardus GNU/Linux dağıtımı için geliştirilen `pardus-about` projesi temel alınarak **Pars Linux** ekosistemi için çatallanmıştır.
-
-Çatallanmanın temel hedefleri:
-1. **Pars Linux Kimliği ve Entegrasyonu**: Uygulamanın Pars Linux masaüstü deneyimiyle tam uyumlu hale getirilmesi.
-2. **Modern Görsel Standartlar**: Vektörel, yüksek çözünürlüklü ve özgün SVG cihaz ikonları ile zenginleştirilmiş arayüz.
-3. **Masaüstü ve Donanım Uyumluluğu**: Farklı masaüstü ortamlarında (XFCE, GNOME, KDE Plasma vb.) pencere ölçekleme, GTK temaları ve donanım algılama yeteneklerinin iyileştirilmesi.
-4. **Gelişmiş Uçbirim ve Teftiş Desteği**: Grafik arayüze ihtiyaç duymadan sunucu ve otomasyon ortamlarında donanım raporu alabilen CLI yeteneklerinin güçlendirilmesi.
+Bu belge, **Pars About** (`org.parslinux.about`) projesinin geçmiş kökenini, Pardus ekosisteminden tamamen ayrılma sürecini ve günümüzdeki bağımsız geliştirme yapısını resmî olarak belgeler.
 
 ---
 
-## 2. Gerçekleştirilen Başlıca Değişiklikler ve İyileştirmeler
+## 1. Geçmiş ve Çatallanma Süreci
 
-### A. Uygulama Kimliği ve Yol Yeniden Yapılandırması (Rebranding)
-* **Uygulama ID**: `org.parslinux.about` olarak güncellendi.
-* **İkili Dosya**: `pars-about` komut adı ile `/usr/bin/pars-about` yoluna yerleştirildi.
-* **Veri Yolu**: Kaynak dosyalar ve varlıklar `/usr/share/pars/pars-about/` dizinine taşındı.
-* **Masaüstü Dosyaları**:
-  - `org.parslinux.about.desktop` (Sistem Özeti & Hakkında)
-  - `org.parslinux.about-hardware.desktop` (Donanım Bilgisi doğrudan başlatıcı)
-* **Kategori ve XDG Standartları**: Pars Linux masaüstü ayarlarıyla uyumlu `X-Pars-Apps` kategorisi tanımlandı.
+**Pars About**, TÜBİTAK ULAKBİM tarafından Pardus için geliştirilmiş olan açık kaynaklı `pardus-about` (v1.2.6) yazılımı temel alınarak çatallanmıştır (fork).
 
-### B. Özgün Vektörel İkon Seti (SVG Art Asset Overhaul)
-Proje için her bir donanım kategorisine özel, modern ve ölçeklenebilir Pars Linux SVG ikonları hazırlandı ve `data/icons/` altına entegre edildi:
-* `pars-about-main.svg`, `pars-about-computer.svg`, `pars-about-desktop.svg`
-* `pars-about-processor.svg` (CPU)
-* `pars-about-memory.svg` (RAM)
-* `pars-about-graphics.svg` (GPU)
-* `pars-about-storage.svg` (Diskler ve Depolama)
-* `pars-about-monitor.svg` (Ekran ve Monitör)
-* `pars-about-network-card.svg`, `pars-about-ethernet.svg`, `pars-about-wifi.svg`, `pars-about-publicip.svg` (Ağ Bileşenleri)
-* `pars-about-audio.svg` (Ses Kartları ve Giriş-Çıkışlar)
-* `pars-about-bluetooth.svg` (Bluetooth Aygıtları)
-* `pars-about-camera.svg` (Webcam ve Kameralar)
-* `pars-about-keyboard.svg`, `pars-about-mouse.svg`, `pars-about-touchpad.svg` (Giriş Cihazları)
-* `pars-about-printer.svg` (Yazıcılar)
-* `pars-about-bios.svg` (Anakart & BIOS/UEFI)
-* `pars-about-fingerprint.svg` (Biyometrik Parmak İzi Okuyucuları)
-* `pars-hardware-info.svg` & `pars-about-symbolic.svg`
+Açık kaynak felsefesi ve **GNU Genel Kamu Lisansı (GPL v3.0)** şartlarına tam bağlılık gereğince, orijinal projenin geçmiş kod tabanına ve emeği geçen geliştiricilere teşekkür ederiz.
 
-### C. Arayüz ve Ölçekleme İyileştirmeleri
-* **Pencere Boyutlandırma**: Küçük ekranlı cihazlarda ve yüksek DPI (HiDPI) ekranlarda yaşanan taşma ve donma sorunları giderildi.
-* **CSS İyileştirmeleri**: `css/main.css` dosyası modern GTK+ 3 seçicileri ve Pars teması renk paletiyle zenginleştirildi.
-* **Özet Kartları**: Donanım özet kutucuklarının (`HardwareGridCell`) hizalama ve simge boşlukları dengelendi.
+---
 
-### D. Headless CLI (`--json` / `-j`) Bağımsızlığı
-* `--json` argümanı çalıştırıldığında X11/Wayland ekran sunucusu arama zorunluluğu ortadan kaldırıldı; sunucu ve konteyner ortamlarında doğrudan stdout'a saf JSON basacak şekilde yalıtıldı.
+## 2. Pardus ile Bağların Kesilmesi ve Tam Bağımsızlık
 
-### E. Yetkilendirme ve PolicyKit Güncellemesi
-* PolicyKit yetki kuralı `org.parslinux.pkexec.pars-about.policy` ve kural dosyası `org.parslinux.about.rules` olarak Pars Linux standartlarına geçirildi.
-* Sistem adı değiştirme (`hostname`) ve sistem teşhis arşivi oluşturma eylemleri bu kural üzerinden güvenli hale getirildi.
+Çatallanma sonrasında proje baştan aşağı yeniden yapılandırılmış ve **Pardus ekosistemi ile tüm teknik, yapısal ve kurumsal bağlar tamamen sonlandırılmıştır**:
 
-### F. Çeviri ve Yerelleştirme Altyapısı
-* Çeviri alan adı `pars-about` olarak güncellendi.
-* `update-translations.sh` ve `fix-po.sh` betikleri optimize edildi; Türkçe (`tr`), Portekizce (`pt`) ve İspanyolca (`es`) dil dosyaları güncellendi.
+* **Upstream Senkronizasyonu Sona Erdi:** Orijinal Pardus deposu ile olan eşzamanlama ve sürüm bağı tamamen kaldırılmıştır. Pars About artık bağımsız bir yol haritasına (roadmap) sahiptir.
+* **Sunucu ve API Bağımsızlığı:** Eski `donanim.pardus.org.tr` sunucu ve donanım raporlama alan adları projeden arındırılmış, ağ istekleri yerel ve bağımsız hale getirilmiştir.
+* **Tek Dağıtım Tekelinden Çıkış:** Orijinal proje yalnızca Debian/Pardus odaklıyken; Pars About başta **Pars Linux (Arch Linux / CachyOS tabanı)** olmak üzere Debian, Ubuntu, Fedora ve diğer tüm modern GNU/Linux dağıtımlarında yerel çalışabilecek şekilde çoklu dağıtım desteğine kavuşturulmuştur.
+
+---
+
+## 3. Yapılan Temel İyileştirmeler ve Yenilikler
+
+Pars Linux ekibi tarafından projeye kazandırılan başlıca özellikler şunlardır:
+
+### 🎨 A. Özgün Görsel Kimlik ve Vektörel İkon Seti
+* Uygulamanın tüm grafiksel varlıkları yenilenmiş; her donanım bileşeni (CPU, GPU, RAM, Depolama, Ağ, Ses, Bluetooth, Giriş aygıtları vb.) için özel modern SVG vektörel ikonlar üretilmiştir.
+* Modern koyu tema (Dark Mode) uyumu ve yüksek çözünürlüklü ekranlar (HiDPI) için tam ölçekleme optimizasyonu sağlanmıştır.
+
+### 🛠️ B. Yönetim ve Otomasyon Betikleri
+Uygulamanın çalıştırılması, kurulması ve paketlenmesi için hepsi-bir-arada araçlar geliştirilmiştir:
+* **`manage.sh`**: İnteraktif konsol menülü yönetim merkezi.
+* **`run.sh`**: Yerel kaynak koddan GUI, donanım veya JSON modunda hızlı çalıştırma.
+* **`install.sh`**: Meson & Ninja ile `/usr` sistem dizinlerine tek adımda kurulum ve önbellek yenileme.
+* **`uninstall.sh`**: Masaüstü kısayolları, PolicyKit kuralları ve ikonlarla birlikte sistemden temizleme.
+* **`package.sh`**: Arch Linux (`.pkg.tar.zst`), Debian (`.deb`) ve kaynak arşiv (`.tar.gz`) paketleme aracı.
+
+### 📸 C. Otomatik Ekran Görüntüsü Yakalama
+* `tools/capture_screenshots.py` aracı ile GTK pencere belleği üzerinden doğrudan piksel piksel güncel ekran görüntüleri (Sistem Özeti, Donanım Ayrıntıları, Rapor Menüsü) otomatik üretilir hale getirilmiştir.
+
+### 🧪 D. Kapsamlı Test Altyapısı
+* `tests/` dizini altında 18 farklı birim testinden oluşan otomatik test paketi geliştirilmiştir (CLI JSON doğrulaması, donanım yöneticileri, masaüstü XDG uyumluluğu, PolicyKit ve gettext çeviri denetimi).
+
+### 🔒 E. Güvenlik ve PolicyKit Standartları
+* Polkit yetkilendirmesi `org.parslinux.pkexec.pars-about.policy` olarak taşınmış; en düşük yetki prensibiyle sistem raporlama ve hostname işlemleri güvenlik altına alınmıştır.
+
+---
+
+## 4. Geliştirme ve Bakım
+
+Pars About projesi, **Pars Linux Geliştirici Ekibi** tarafından aktif olarak geliştirilmekte ve sürdürülmektedir:
+
+* **Resmî Git Deposu:** [https://github.com/parslinux/Pars-About](https://github.com/parslinux/Pars-About)
+* **İletişim & Hata Bildirimi:** GitHub Issues
+* **Lisans:** GNU General Public License v3.0 (GPL-3.0-or-later)

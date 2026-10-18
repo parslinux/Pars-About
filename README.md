@@ -102,7 +102,7 @@ Proje hakkındaki tüm detaylı kılavuzlar `docs/` dizini altında toplanmışt
 |:---|:---|
 | [Dokümantasyon Dizini (INDEX.md)](docs/INDEX.md) | Tüm belgelerin merkezi dizini |
 | [Mimari (ARCHITECTURE.md)](docs/ARCHITECTURE.md) | Dahili mimari, bileşen şeması ve veri akışı |
-| [Fork Notları (FORK.md)](docs/FORK.md) | Pardus'tan çatallanma süreci ve Pars Linux dönüşümü |
+| [Çatallanma ve Bağımsızlık Bildirisi (FORK.md)](FORK.md) | Çatallanma geçmişi, Pardus'tan ayrılma ve Pars Linux bağımsızlığı |
 | [Geliştirici Yönergesi (CLAUDE.md)](docs/CLAUDE.md) | Geliştirici kuralları, GTK standartları ve komutlar |
 | [Uçbirim Referansı (CLI_REFERENCE.md)](docs/CLI_REFERENCE.md) | `--json`, `--hardware` ve `jq` otomasyon komutları |
 | [Kurulum Kılavuzu (INSTALL.md)](docs/INSTALL.md) | Bağımlılıklar, kaynak koddan derleme ve .deb oluşturma |
